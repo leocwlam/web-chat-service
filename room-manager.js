@@ -15,6 +15,7 @@ const createRoom = function (roomName, hostName, isRequireHost = true) {
   }
 
   rooms.set(roomName, {
+    room: roomName,
     expireDate: moment().add(1, 'hours'),
     hostName,
     isRequireHost,
@@ -36,7 +37,7 @@ const removeUserAtRoom = function (roomName, socketId) {
   const user = room.users.get(socketId)
   room.users.delete(socketId)
 
-  // drop room with no user
+  // drop room with no user and the last user is host
   if ((room.users.size === 0) && (room.isRequireHost) && (user === room.hostName)) {
     rooms.delete(roomName)
   }
@@ -50,7 +51,7 @@ const userJoinRoom = function (roomName, socketId, userName) {
 }
 
 const getAllRooms = function () {
-  return Array.from(rooms.keys())
+  return Array.from(rooms.values())
 }
 
 const getRoom = function (roomName) {

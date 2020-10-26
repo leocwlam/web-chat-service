@@ -116,8 +116,8 @@ describe('room-manager Tests', function () {
         roomManager.createRoom('Family', 'tester', false)
         const rooms = roomManager.getAllRooms()
         expect(rooms.length).to.equal(2)
-        expect(rooms.filter(name => name === 'Public')[0]).to.equal('Public')
-        expect(rooms.filter(name => name === 'Family')[0]).to.equal('Family')
+        expect(rooms.filter(room => room.room === 'Public')[0].room).to.equal('Public')
+        expect(rooms.filter(room => room.room === 'Family')[0].room).to.equal('Family')
       } finally {
         roomManager.removeRoom('Family')
         roomManager.removeRoom('Public')

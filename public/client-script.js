@@ -1,48 +1,76 @@
 'use strict'
 
-const CHATSERVICEURL = process.env.CHATSERVICEURL || 'http://localhost:5000'
+{/* <script type="module" src="http://localhost:5000/socket-lib/socket.io.js"></script> */}
+// const CHATSERVICEURL = process.env.CHATSERVICEURL || 'http://localhost:5000'
+const CHATSERVICEURL = 'http://localhost:5000'
+
+
 const socket = io(CHATSERVICEURL)
 
-let roomCreateCallback = null
+let roomCreatedCallback = null
 let messageCallback = null
+let chaterJoinRoomCallback = null
+let chaterLeaveRoomCallback = null
 
-export function setupRoomArea (roomCreateHandler) {
-  roomCreateCallback = roomCreateHandler
+function setupRoomCreatedHandler (roomCreatedHandler) {
+  roomCreatedCallback = roomCreatedHandler
 }
 
-// const messageElement = document.createElement('div')
-// messageElement.innerHTML = messageElement
-// messageArea.append(messageElement)
-export function setupMessageArea (appendMessageHandler) {
+function setupChaterJoinRoomHandler (chaterJoinRoomHandler) {
+  chaterJoinRoomCallback = chaterJoinRoomHandler
+}
+
+function setupChaterLeaveRoomHandler (chaterLeaveRoomHandler) {
+  chaterLeaveRoomCallback = chaterLeaveRoomHandler
+}
+
+function setupMessageAppendHandler (appendMessageHandler) {
   messageCallback = appendMessageHandler
 }
 
-export function requestJoinRoom (roomName, userName) {
+function appendMessage (message) {
+  if (messageCallback) {
+    messageCallback(message)
+  }
+}
+
+function requestJoinRoom (roomName, userName) {
   socket.emit('new-user', roomName, userName)
   appendMessage('You joined')
 }
 
-export function postMessage (roomName, message) {
+function requestLeaveRoom (roomName) {
+  socket.emit('disconnect')
+  appendMessage(`You request to leave ${roomName}`)
+}
+
+function postMessage (roomName, message) {
   socket.emit('post-chat-message', roomName, message)
   appendMessage(`Your MSG: ${message}`)
 }
 
-function appendMessage (message) {
-  messageCallback(message)
-}
+
 
 socket.on('room-created', (roomName, hostName) => {
-  roomCreateCallback(roomName, hostName)
+  if (roomCreatedCallback) {
+    roomCreatedCallback(roomName, hostName)
+  }
 })
 
 socket.on('chat-message', data => {
   appendMessage(`${data.name}: ${data.message}`)
 })
 
-socket.on('user-connected', name => {
+socket.on('user-connected', data => {
+  if (chaterJoinRoomCallback) {
+    chaterJoinRoomCallback(data.room, data.name)
+  }
   appendMessage(`${name} connect`)
 })
 
-socket.on('user-disconnected', name => {
-  appendMessage(`${name} disconnected`)
+socket.on('user-disconnected', data => {
+  if (chaterLeaveRoomCallback) {
+    chaterLeaveRoomCallback(data.room, data.name)
+  }
+  appendMessage(`${data.name} disconnected`)
 })
