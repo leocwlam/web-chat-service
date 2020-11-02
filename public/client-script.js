@@ -49,8 +49,6 @@ function postMessage (roomName, message) {
   appendMessage(`Your MSG: ${message}`)
 }
 
-
-
 socket.on('room-created', (roomName, hostName) => {
   if (roomCreatedCallback) {
     roomCreatedCallback(roomName, hostName)

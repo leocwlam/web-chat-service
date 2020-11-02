@@ -4,7 +4,7 @@
 const chai = require('chai')
 const { expect } = chai
 
-const roomManager = require('../room-manager')
+const roomManager = require('../src/room-manager')
 
 describe('room-manager Tests', function () {
   describe('Room Tests', function () {
