@@ -1,6 +1,6 @@
 'use strict'
 
-const socketIOServer = (webServer, roomManager) => { 
+const socketIOServer = (webServer, roomManager) => {
   const socketIOServer = require('socket.io')(webServer)
 
   socketIOServer.on('connection', socket => {
