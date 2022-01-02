@@ -3,7 +3,7 @@
 > Provide basic web chat service. It services the server-side chat monitor handling.
 
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/leocwlam/web-chat-service/blob/master/LICENSE)
-[![Build Status](https://travis-ci.com/leocwlam/web-chat-service.svg?branch=master)](https://travis-ci.com/leocwlam/web-chat-service)
+[![Build Status](https://api.travis-ci.com/leocwlam/web-chat-service.svg?branch=master)](https://app.travis-ci.com/leocwlam/web-chat-service)
 [![Coverage Status](https://coveralls.io/repos/github/leocwlam/web-chat-service/badge.svg?branch=master)](https://coveralls.io/github/leocwlam/web-chat-service?branch=master)
 [![Dependency Status](https://david-dm.org/leocwlam/web-chat-service.svg)](https://david-dm.org/leocwlam/web-chat-service)
 [![devDependency Status](https://david-dm.org/leocwlam/web-chat-service/dev-status.svg)](https://david-dm.org/leocwlam/web-chat-service?type=dev)
